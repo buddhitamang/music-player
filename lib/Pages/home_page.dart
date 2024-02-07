@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musicplayer/Pages/artist_song.dart';
 import 'package:musicplayer/Pages/song_page.dart';
 import 'package:musicplayer/components/songs_tile.dart';
 import 'package:musicplayer/model/playlist_provider.dart';
@@ -27,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   //got to song
    void goToSong(int songIndex){
      playListProvider.currentSongIndex=songIndex;
-     Navigator.push(context, MaterialPageRoute(builder: (context)=>SongPage()));
+     Navigator.push(context, MaterialPageRoute(builder: (context)=>ArtistSong()));
 
    }
 
@@ -93,7 +94,7 @@ class _HomePageState extends State<HomePage> {
               TextField(
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.search),
-                  hintText: 'Find your coffee',
+                  hintText: 'Find your music',
                   hintStyle: TextStyle(color: Colors.grey),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey.shade500),
@@ -105,7 +106,7 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(height: 15),
               Text(
-                'Popular Playlist',
+                'Popular Artist',
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 25),
@@ -116,27 +117,50 @@ class _HomePageState extends State<HomePage> {
                       Widget? child) {
                     final List<Song> playlist = value.playlist;
                     return ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: playlist.length,
-                        itemBuilder: (context, index) {
-                          final Song song = playlist[index];
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                                width: 250,
-                                child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(15),
-                                    child: GestureDetector(
-                                      onTap: (){
-                                        return goToSong(index);
-                                      },
-                                      child: Image.asset(
-                                        song.imagePath,
-                                        fit: BoxFit.cover,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: playlist.length,
+                      itemBuilder: (context, index) {
+                        final Song song = playlist[index];
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            width: 200,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: GestureDetector(
+                                onTap: () {
+                                  return goToSong(index);
+                                },
+                                child: Container(
+                                  color: Colors.grey.shade500,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    children: [
+                                      Expanded(
+                                        child: Image.asset(
+                                          song.imagePath,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
-                                    ))),
-                          );
-                        });
+                                      SizedBox(height: 8), // Adjust spacing between image and text
+                                      Text(
+                                        song.artistName,
+                                        textAlign: TextAlign.center, // Adjust text alignment as needed
+                                        style: TextStyle(
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+
 
                   },
                 ),

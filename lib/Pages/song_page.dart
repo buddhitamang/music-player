@@ -103,7 +103,7 @@ class SongPage extends StatelessWidget {
                         flex: 2,
                         child: GestureDetector(
                           onTap: value.pauseOrResume,
-                            child: NeuBox(child: value.isPlaying? Icon(Icons.play_arrow) : Icon(Icons.pause)))),
+                            child: NeuBox(child: value.isPlaying? Icon(Icons.pause) : Icon(Icons.play_arrow)))),
                     SizedBox(
                       width: 20,
                     ),
